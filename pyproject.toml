@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "masonite-minio"
+version = "0.1.0"
+description = "MinIO (S3-compatible) filesystem driver for the Masonite 5 framework"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [{ name = "aleksanm" }]
+keywords = ["masonite", "minio", "s3", "storage", "filesystem"]
+classifiers = [
+    "Framework :: Masonite",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "masonite-framework>=5.0,<6",
+    "boto3>=1.28",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "ruff>=0.5",
+]
+
+[project.urls]
+Homepage = "https://github.com/aleksanm/masonite-minio"
+Issues = "https://github.com/aleksanm/masonite-minio/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/masonite_minio"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
