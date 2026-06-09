@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "masonite-minio"
-version = "0.1.1"
+version = "0.1.2"
 description = "MinIO (S3-compatible) filesystem driver for the Masonite 5 framework"
 readme = "README.md"
 license = { text = "MIT" }
