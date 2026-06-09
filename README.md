@@ -86,9 +86,17 @@ Unit tests run offline. Integration tests against a live MinIO are skipped
 unless `MINIO_TEST_ENDPOINT` (+ `MINIO_TEST_CLIENT/SECRET/BUCKET`) are set:
 
 ```bash
-docker run -p 9000:9000 -e MINIO_ROOT_USER=minioadmin \
-  -e MINIO_ROOT_PASSWORD=minioadmin minio/minio server /data
+docker run -p 9000:9000 -p 9001:9001 \
+  -e MINIO_ROOT_USER=minioadmin -e MINIO_ROOT_PASSWORD=minioadmin \
+  minio/minio server /data --console-address ":9001"
 ```
+
+This publishes two ports: the **S3 API** on `9000` (use this for
+`MINIO_ENDPOINT`) and the **web console** on `9001`
+(http://127.0.0.1:9001, log in with `minioadmin` / `minioadmin`). Without
+`--console-address`, MinIO binds the console to a random internal port that
+isn't reachable from the host. A fresh server has no buckets — create
+`MINIO_TEST_BUCKET` from the console before running the integration tests.
 
 ## License
 
