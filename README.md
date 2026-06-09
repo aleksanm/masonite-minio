@@ -102,6 +102,33 @@ This publishes two ports: the **S3 API** on `9000` (use this for
 isn't reachable from the host. A fresh server has no buckets — create
 `MINIO_TEST_BUCKET` from the console before running the integration tests.
 
+## Releasing
+
+Releases are published to PyPI automatically by `.github/workflows/publish.yml`
+using [Trusted Publishing](https://docs.pypi.org/trusted-publishers/) (OIDC) —
+no API tokens are stored in the repo.
+
+**One-time PyPI setup** (per project): on PyPI go to the project's
+*Settings → Publishing → Add a new pending/trusted publisher* and register:
+
+| Field | Value |
+|-------|-------|
+| Owner | `aleksanm` |
+| Repository | `masonite-minio` |
+| Workflow name | `publish.yml` |
+| Environment | `pypi` |
+
+**To cut a release:**
+
+1. Bump `version` in `pyproject.toml` and commit.
+2. Tag it: `git tag -a vX.Y.Z -m "vX.Y.Z" && git push origin main vX.Y.Z`.
+3. Publish a GitHub Release for that tag (e.g. `gh release create vX.Y.Z --generate-notes`).
+
+Publishing the Release triggers the workflow, which builds the sdist + wheel,
+verifies the built version matches the tag, and uploads to PyPI. (Adding the
+GitHub `pypi` environment under *Settings → Environments* lets you gate the
+publish step with required reviewers.)
+
 ## License
 
 MIT
