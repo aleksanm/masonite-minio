@@ -63,8 +63,12 @@ class MinioDriver(AmazonS3Driver):
 
         This is generated client-side — it does not contact the server.
         """
-        return self.get_connection().client("s3").generate_presigned_url(
-            "get_object",
-            Params={"Bucket": self.get_bucket(), "Key": path},
-            ExpiresIn=expires,
+        return (
+            self.get_connection()
+            .client("s3")
+            .generate_presigned_url(
+                "get_object",
+                Params={"Bucket": self.get_bucket(), "Key": path},
+                ExpiresIn=expires,
+            )
         )

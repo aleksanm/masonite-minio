@@ -23,6 +23,10 @@ PROVIDERS = [
 ]
 ```
 
+The driver is registered in the provider's `register()` phase, so placement is
+flexible — just keep `MinioProvider` after the framework's `StorageProvider`
+(appending it at the end of the list, as above, satisfies this).
+
 **2. Add a `minio` disk** to the `DISKS` dict in `config/filesystem.py`:
 
 ```python
